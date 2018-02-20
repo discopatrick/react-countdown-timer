@@ -44,8 +44,46 @@
         }
       }
 
+      class CountUpTimer extends React.Component {
+        constructor(props) {
+          super(props);
+          this.state = {
+            date: new Date(),
+            secondsSinceDate: 0
+          };
+        }
+
+        componentDidMount() {
+          this.timerID = setInterval(
+            () => this.tick(),
+            1000
+          );
+        }
+
+        componentWillUnmount() {
+          clearInterval(this.timerID);
+        }
+
+        tick() {
+          this.setState({
+            secondsSinceDate: (new Date() - this.state.date) / 1000
+          });
+        }
+
+        render() {
+          return (
+            <div>
+              <h2>It is {this.state.secondsSinceDate} seconds since {this.state.date.toLocaleTimeString()}.</h2>
+            </div>
+          )
+        }
+      }
+
       ReactDOM.render(
-        <Clock />,
+        <div>
+          <Clock />
+          <CountUpTimer />
+        </div>,
         document.getElementById('root')
       );
 
