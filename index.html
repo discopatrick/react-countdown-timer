@@ -65,9 +65,9 @@
         }
 
         tick() {
-          this.setState({
-            secondsSinceDate: (new Date() - this.state.date) / 1000
-          });
+          this.setState((prevState, props) => ({
+            secondsSinceDate: (new Date() - prevState.date) / 1000
+          }));
         }
 
         render() {
