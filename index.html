@@ -78,10 +78,48 @@
         }
       }
 
+      class CountDownTimer extends React.Component {
+        constructor(props) {
+          super(props);
+          let endDate = new Date();
+          endDate.setSeconds(endDate.getSeconds() + props.seconds);
+          this.state = {
+            end: endDate,
+            secondsUntilEnd: (endDate - new Date()) / 1000
+          }
+        }
+
+        componentDidMount() {
+          this.timerID = setInterval(
+            () => this.tick(),
+            1000
+          );
+        }
+
+        componentWillUnmount() {
+          clearInterval(this.timerID);
+        }
+
+        tick() {
+          this.setState((prevState, props) => ({
+            secondsUntilEnd: (this.state.end - new Date()) / 1000
+          }));
+        }
+
+        render() {
+          return (
+            <div>
+              <h2>It is {this.state.secondsUntilEnd} seconds until {this.state.end.toLocaleTimeString()}.</h2>
+            </div>
+          )
+        }
+      }
+
       ReactDOM.render(
         <div>
           <Clock />
           <CountUpTimer start={ new Date() } />
+          <CountDownTimer seconds={ 30 } />
         </div>,
         document.getElementById('root')
       );
