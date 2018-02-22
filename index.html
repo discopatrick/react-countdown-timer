@@ -115,11 +115,36 @@
         }
       }
 
+      class TimeSelector extends React.Component {
+        constructor(props) {
+          super(props);
+          this.state = {
+            seconds: 30
+          }
+          this.handleChange = this.handleChange.bind(this);
+        }
+
+        handleChange(event) {
+          this.setState({
+            seconds: event.target.value
+          });
+        }
+
+        render() {
+          return (
+            <div>
+              <input value={this.state.seconds} onChange={this.handleChange} />
+            </div>
+          )
+        }
+      }
+
       ReactDOM.render(
         <div>
           <Clock />
           <CountUpTimer start={ new Date() } />
           <CountDownTimer seconds={ 30 } />
+          <TimeSelector />
         </div>,
         document.getElementById('root')
       );
