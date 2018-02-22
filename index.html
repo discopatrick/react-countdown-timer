@@ -48,7 +48,6 @@
         constructor(props) {
           super(props);
           this.state = {
-            date: new Date(),
             secondsSinceDate: 0
           };
         }
@@ -66,14 +65,14 @@
 
         tick() {
           this.setState((prevState, props) => ({
-            secondsSinceDate: (new Date() - prevState.date) / 1000
+            secondsSinceDate: (new Date() - props.start) / 1000
           }));
         }
 
         render() {
           return (
             <div>
-              <h2>It is {this.state.secondsSinceDate} seconds since {this.state.date.toLocaleTimeString()}.</h2>
+              <h2>It is {this.state.secondsSinceDate} seconds since {this.props.start.toLocaleTimeString()}.</h2>
             </div>
           )
         }
@@ -82,7 +81,7 @@
       ReactDOM.render(
         <div>
           <Clock />
-          <CountUpTimer />
+          <CountUpTimer start={ new Date() } />
         </div>,
         document.getElementById('root')
       );
