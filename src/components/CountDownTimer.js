@@ -21,7 +21,7 @@ class CountDownTimer extends React.Component {
     endDate.setSeconds(endDate.getSeconds() + this.state.secondsToCount);
     this.end = endDate;
     this.setState({
-      secondsUntilEnd: (this.end - new Date()) / 1000
+      secondsUntilEnd: this.getSecondsLeft()
     })
     this.startTick()
   }
@@ -35,7 +35,7 @@ class CountDownTimer extends React.Component {
   }
 
   tick() {
-    let secondsLeft = Math.round((this.end - new Date()) / 1000)
+    let secondsLeft = this.getSecondsLeft();
     if (secondsLeft <= 0) {
       this.stopTick();
     }
@@ -46,6 +46,10 @@ class CountDownTimer extends React.Component {
 
   stopTick(event) {
     clearInterval(this.timerID);
+  }
+
+  getSecondsLeft() {
+    return Math.round((this.end - new Date()) / 1000)
   }
 
   componentWillUnmount() {
