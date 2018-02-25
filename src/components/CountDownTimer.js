@@ -1,10 +1,12 @@
 import React from 'react'
+import Sound from 'react-sound'
 
 class CountDownTimer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      secondsToCount: 30
+      secondsToCount: 30,
+      beepNow: false
     }
     this.handleChangeSeconds = this.handleChangeSeconds.bind(this);
     this.startTimer = this.startTimer.bind(this);
@@ -36,11 +38,16 @@ class CountDownTimer extends React.Component {
 
   tick() {
     let secondsLeft = this.getSecondsLeft();
+    let beep = false;
+    if (secondsLeft >= 0 && secondsLeft <= 5) {
+      beep = true;
+    }
     if (secondsLeft <= 0) {
       this.stopTick();
     }
     this.setState({
-      secondsUntilEnd: secondsLeft
+      secondsUntilEnd: secondsLeft,
+      beepNow: beep
     });
   }
 
@@ -71,6 +78,9 @@ class CountDownTimer extends React.Component {
           <span>Timer stopped.</span>
         ) }
         </div>
+        <Sound
+          url="beep.wav"
+          playStatus={ this.state.beepNow ? Sound.status.PLAYING : Sound.status.STOPPED } />
       </div>
     )
   }
